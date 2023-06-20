@@ -1,0 +1,44 @@
+class TreeNode:
+    def __init__(self, value):
+        self.val = value
+        self.left = None
+        self.right = None
+
+
+def constructTree(s):
+    if not s:
+        return None
+
+    left_index = s.find("(")
+
+    if left_index == -1:
+        value = int(s)
+        return TreeNode(value)
+
+    value = int(s[:left_index])
+    root = TreeNode(value)
+
+    right_index = findClosingParenthesis(s, left_index)
+
+    left_substring = s[left_index + 1: right_index]
+    root.left = constructTree(left_substring)
+
+    if right_index + 1 < len(s):
+        right_substring = s[right_index + 1:]
+        root.right = constructTree(right_substring)
+
+    return root
+
+
+def findClosingParenthesis(s, left_index):
+    count = 0
+    for i in range(left_index, len(s)):
+        if s[i] == "(":
+            count += 1
+        elif s[i] == ")":
+            count -= 1
+
+        if count == 0:
+            return i
+
+    return -1
