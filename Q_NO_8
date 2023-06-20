@@ -1,0 +1,20 @@
+def buddyStrings(s, goal):
+    mismatch_indices = []
+    mismatch_chars = []
+
+    for i in range(len(s)):
+        if s[i] != goal[i]:
+            mismatch_indices.append(i)
+            mismatch_chars.append(s[i])
+
+    if len(mismatch_indices) != 2:
+        return False
+
+    i, j = mismatch_indices
+    return s[i] == goal[j] and s[j] == goal[i]
+
+
+s = "ab"
+goal = "ba"
+result = buddyStrings(s, goal)
+print(result)  # Output: True
