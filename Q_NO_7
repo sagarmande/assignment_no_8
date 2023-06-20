@@ -1,0 +1,29 @@
+def decodeString(s):
+    stack = []
+
+    for c in s:
+        if c.isdigit():
+            num = ""
+            while c.isdigit():
+                num += c
+                c = next(s_iter)
+            stack.append(int(num))
+        elif c == "[":
+            stack.append(c)
+        elif c == "]":
+            substr = ""
+            while stack and stack[-1] != "[":
+                substr = stack.pop() + substr
+            stack.pop()  # Pop the opening bracket "["
+
+            repeat = stack.pop()
+            stack.append(substr * repeat)
+        else:
+            stack.append(c)
+
+    return "".join(stack[::-1])
+
+
+s = "3[a]2[bc]"
+result = decodeString(s)
+print(result)  # Output: "aaabcbc"
